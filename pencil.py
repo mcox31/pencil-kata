@@ -7,6 +7,7 @@ class Pencil():
         self.tip_durability = tip_durability
         self.length = length
         self.eraser_durability = eraser_durability
+        self.erased_word_indices = []
 
     def write(self, words):
         """My pencil writes on a sheet of paper. Writing more words means more words on the page."""
@@ -64,9 +65,9 @@ class Pencil():
         return self.length
 
     def erase(self, words):
-        index_of_word_to_be_erased = self.sheet_of_paper.rfind(words)
-        paper_to_the_left_of_erased_word = self.sheet_of_paper[0:index_of_word_to_be_erased]
-        paper_to_the_right_of_erased_word = self.sheet_of_paper[index_of_word_to_be_erased+len(words):]
+        index_of_word = self.sheet_of_paper.rfind(words)
+        self.erased_word_indices.append(index_of_word)
+        paper_to_the_left_of_erased_word, paper_to_the_right_of_erased_word = self.split_paper(index_of_word, len(words))
         numspaces_where_word_was = ""
         for char in words:
             if self.eraser_durability == 0:
@@ -78,10 +79,22 @@ class Pencil():
             new_sheet_of_paper = paper_to_the_left_of_erased_word + numspaces_where_word_was + paper_to_the_right_of_erased_word
         else:
             new_sheet_of_paper = paper_to_the_left_of_erased_word + words[:len(numspaces_where_word_was)-1] + numspaces_where_word_was + paper_to_the_right_of_erased_word
-        return new_sheet_of_paper
+        self.sheet_of_paper = new_sheet_of_paper
+        return self.sheet_of_paper
 
     def set_eraser_durability(self, durability):
         self.eraser_durability = durability
     
     def get_eraser_durability(self):
         return self.eraser_durability
+
+    def rewrite(self, words):
+        index_to_insert_word = self.erased_word_indices[0]
+        paper_to_left_of_insert, paper_to_right_of_insert = self.split_paper(index_to_insert_word, len(words))
+        return paper_to_left_of_insert + words + paper_to_right_of_insert
+
+
+    def split_paper(self, index, length):
+        paper_to_the_left_of_word = self.sheet_of_paper[0:index]
+        paper_to_the_right_of_word = self.sheet_of_paper[index+length:]
+        return (paper_to_the_left_of_word, paper_to_the_right_of_word)

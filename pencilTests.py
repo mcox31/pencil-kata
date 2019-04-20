@@ -78,5 +78,10 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.set_eraser_durability(5)
         self.assertEqual(self.my_pencil.erase("shinedown"), "shin     ")
 
+    def test_if_a_word_is_erased_you_can_edit_to_write_over_the_whitespace(self):
+        self.my_pencil.write("your mother was a hamster")
+        self.my_pencil.erase("mother")
+        self.assertEqual(self.my_pencil.rewrite("mom"), "your mom    was a hamster")
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

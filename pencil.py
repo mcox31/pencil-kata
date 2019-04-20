@@ -26,13 +26,13 @@ class Pencil():
             return 0
 
     def calculate_words_that_pencil_writes_before_going_dull(self, words):
-        
+        """Returns regular string or stripped string. Also re-calculates durability."""
         # return full string if durability is fine.
         if self.calculate_durability(words) > 0:
             self.set_durability(self.calculate_durability(words))
             return words
         
-        # return stripped string if pencil will run out of durability
+        # return stripped string if pencil will run out of durability, ignoring spaces
         new_words = ""
         for char in words:
             if self.durability == 0:
@@ -40,6 +40,9 @@ class Pencil():
             else:
                 new_words = new_words + char
                 if char != " ":
-                    self.durability -= 1
+                    if char.isupper():
+                        self.durability -= 2
+                    else:
+                        self.durability -= 1
         return new_words
         

@@ -11,7 +11,6 @@ class PencilTester(unittest.TestCase):
         """Runs once per test to delete object"""
         del(self.my_pencil)
 
-
     def test_if_pencil_writes_a_word_it_is_outputted(self):
         self.assertEqual(self.my_pencil.write("hello"), "hello")
 
@@ -31,6 +30,10 @@ class PencilTester(unittest.TestCase):
     def test_if_durability_is_not_affected_by_whitespace(self):
         self.my_pencil.set_durability(4)
         self.assertEqual(self.my_pencil.write("ab cd"), "ab cd")
+
+    def test_if_durability_is_affected_by_case_of_characters(self):
+        self.my_pencil.set_durability(4)
+        self.assertEqual(self.my_pencil.write("Hello"), "Hel")
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

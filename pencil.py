@@ -44,6 +44,7 @@ class Pencil():
         new_words = ""
         for char in words:
             if self.tip_durability == 0:
+                print("\nYour pencil is dull.")
                 break
             else:
                 new_words = new_words + char
@@ -89,6 +90,7 @@ class Pencil():
         numspaces_where_word_was = ""
         for char in words_to_erase:
             if self.eraser_durability == 0:
+                print("\nYour eraser is dull.")
                 break
             numspaces_where_word_was = numspaces_where_word_was + " "
             if char != " ":

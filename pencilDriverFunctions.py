@@ -44,7 +44,10 @@ def view_pencil_stats_and_paper():
 
 def write_with_pencil():
     print_divider()
-    my_pencil.write(input("Enter what to write: "))
+    try:
+        my_pencil.write(input("Enter what to write: "))
+    except:
+        print_incorrect_selection()
     print_stats_and_paper()
 
 def sharpen_pencil():
@@ -54,12 +57,18 @@ def sharpen_pencil():
 
 def erase_words():
     print_divider()
-    my_pencil.erase(input("Enter what to erase: "))
+    try:
+        my_pencil.erase(input("Enter what to erase: "))
+    except:
+        print_incorrect_selection()
     print_stats_and_paper()
 
 def rewrite_words():
     print_divider()
-    my_pencil.rewrite(get_selection("Enter index of erased word to replace: "), input("Enter words to write: "))
+    try:
+        my_pencil.rewrite(get_selection("Enter index of erased word to replace: "), input("Enter words to write: "))
+    except:
+        print_incorrect_selection()
     print_stats_and_paper()
 
 def print_unit_tests():

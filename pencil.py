@@ -1,5 +1,4 @@
 class Pencil():
-
     def __init__(self, tip_durability, length, eraser_durability):
         """Here is my pencil. I have a blank sheet of paper."""
         self.sheet_of_paper = ""
@@ -113,7 +112,6 @@ class Pencil():
                 numspaces_where_word_was + paper_to_the_right_of_erased_word
             # add partially erased word to list for rewriting options
             self.erased_word_indices_and_lengths.append((index_of_word+len(substring_that_remains_after_eraser_durability_is_zero), len(numspaces_where_word_was)))    
-
         self.sheet_of_paper = new_sheet_of_paper
         return self.sheet_of_paper
 
@@ -146,7 +144,6 @@ class Pencil():
         if len(words_to_be_inserted) <= erased_word_length:
             new_sheet_of_paper = paper_to_left_of_insert + \
                 words_to_be_inserted + paper_to_right_of_insert[len(words_to_be_inserted):]
-
         else:
             # checks if end needs to be padded because replacement is longer than previous word and extends past the old string length.
             if len(words_to_be_inserted) > len(paper_to_right_of_insert):

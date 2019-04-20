@@ -27,38 +27,29 @@ while True:
     if selection == 1:
         pf.create_new_pencil()
         continue
-
     elif selection == 2:
         pf.edit_pencil()
         continue
-
     elif selection == 3:
         pf.view_pencil_stats_and_paper()
         continue
-
     elif selection == 4:
         pf.write_with_pencil()
         continue
-
     elif selection == 5:
         pf.sharpen_pencil()
         continue
-
     elif selection == 6:
         pf.erase_words()
         continue
-
     elif selection == 7:
         pf.rewrite_words()
         continue
-
     elif selection == 8:
         pf.print_unit_tests()
         continue
-
     elif selection == 9:
         print("\nThank you for using the pencil driver program. Goodbye.\n")
         break
-
     else:
         pf.print_incorrect_selection()

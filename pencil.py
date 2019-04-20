@@ -11,6 +11,7 @@ class Pencil():
             self.sheet_of_paper = self.sheet_of_paper + words
         else:
             self.sheet_of_paper = self.sheet_of_paper + self.calculate_words_that_pencil_writes_before_going_dull(words)
+        self.set_durability(self.calculate_durability(words))
         return self.sheet_of_paper
 
     def set_durability(self, durability):
@@ -22,9 +23,9 @@ class Pencil():
         return self.durability
 
     def calculate_durability(self, words):
-        """Calculates durability from written words. If durability is greater, returns durability after words. Otherwise returns zero durability"""
-        if self.check_durability() > len(words):
-            return (self.durability - len(words))
+        """Calculates durability from written words, ignoring spaces. If durability is greater, returns durability after words. Otherwise returns zero durability"""
+        if self.check_durability() > len(words.replace(" ", "")):
+            return (self.durability - len(words.replace(" ", "")))
         else:
             return 0
 
@@ -35,6 +36,7 @@ class Pencil():
                 break
             else:
                 new_words = new_words + char
-                self.durability -= 1
+                if char != " ":
+                    self.durability -= 1
         return new_words
         

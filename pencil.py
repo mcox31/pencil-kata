@@ -8,6 +8,7 @@ class Pencil():
         self.length = length
         self.eraser_durability = eraser_durability
         self.erased_word_indices_and_lengths = []
+        self.erased_word_indices_and_lengths_sorted = []
 
     def write(self, words):
         """My pencil writes on a sheet of paper. Writing more words means more words on the page."""
@@ -88,25 +89,34 @@ class Pencil():
     def get_eraser_durability(self):
         return self.eraser_durability
 
-    def rewrite(self, words):
-        index_to_insert_word, erased_word_length = self.erased_word_indices_and_lengths[0]
+    def rewrite(self, index, words):
+        self.erased_word_indices_and_lengths_sorted = sorted(self.erased_word_indices_and_lengths)
+        index_to_insert_word, erased_word_length = self.erased_word_indices_and_lengths_sorted[index]
         paper_to_left_of_insert, paper_to_right_of_insert = self.split_paper(index_to_insert_word, 0)
         rewritten_insert = ""
         new_sheet_of_paper = ""
         if len(words) <= erased_word_length:
             new_sheet_of_paper = paper_to_left_of_insert + words + paper_to_right_of_insert[len(words):]
         else:
+            if len(words) > len(paper_to_right_of_insert):
+                num_of_spaces_to_pad = len(words) - len(paper_to_right_of_insert)
+                for x in range(num_of_spaces_to_pad):
+                    paper_to_right_of_insert = paper_to_right_of_insert + " "
+
             for x, y in zip(words, paper_to_right_of_insert):
-                if y == " ":
+                if y == " " or "":
                     rewritten_insert = rewritten_insert + x
                 else:
                     rewritten_insert = rewritten_insert + "@"
             new_sheet_of_paper = paper_to_left_of_insert + rewritten_insert + paper_to_right_of_insert[len(rewritten_insert):]
         self.sheet_of_paper = new_sheet_of_paper
-        self.erased_word_indices_and_lengths = self.erased_word_indices_and_lengths[1:]
+        self.erased_word_indices_and_lengths.remove((index_to_insert_word, erased_word_length))
         return self.sheet_of_paper
 
     def split_paper(self, index, length):
         paper_to_the_left_of_word = self.sheet_of_paper[0:index]
         paper_to_the_right_of_word = self.sheet_of_paper[index+length:]
         return (paper_to_the_left_of_word, paper_to_the_right_of_word)
+
+    def rewrite_index(self, index, words):
+        self.erased_word_indices_and_lengths_sorted = sorted(self.erased_word_indices_and_lengths)

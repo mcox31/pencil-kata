@@ -5,7 +5,7 @@ class PencilTester(unittest.TestCase):
     
     def setUp(self):
         """Runs once per test to define a fresh object."""
-        self.my_pencil = Pencil(50, 5, 20)
+        self.my_pencil = Pencil(50, 5, 50)
     
     def tearDown(self):
         """Runs once per test to delete object"""
@@ -81,24 +81,26 @@ class PencilTester(unittest.TestCase):
     def test_if_a_word_is_erased_you_can_edit_to_write_over_the_whitespace(self):
         self.my_pencil.write("your mother was a hamster")
         self.my_pencil.erase("mother")
-        self.assertEqual(self.my_pencil.rewrite("mom"), "your mom    was a hamster")
+        self.assertEqual(self.my_pencil.rewrite(0, "mom"), "your mom    was a hamster")
 
     def test_rewriting_a_word_that_is_too_long_overwrites_characters_with_at_symbols(self):
         self.my_pencil.write("my name is Smith.")
         self.my_pencil.erase("name")
-        self.assertEqual(self.my_pencil.rewrite("surname"), "my surna@@ Smith.")
+        self.assertEqual(self.my_pencil.rewrite(0, "surname"), "my surna@@ Smith.")
 
     def test_erasing_multiple_word_multiples(self):
         self.my_pencil.write("How much wood could a woodchuck chuck if a woodchuck...")
         self.assertEqual(self.my_pencil.erase("chuck"), "How much wood could a woodchuck chuck if a wood     ...")
         self.assertEqual(self.my_pencil.erase("chuck"), "How much wood could a woodchuck       if a wood     ...")
 
-    def test_rewriting_rewrites_in_the_order_erased(self):
-        self.my_pencil.write("She sells seashells by the seashore")
-        self.assertEqual(self.my_pencil.erase("seashells"), "She sells           by the seashore")
-        self.assertEqual(self.my_pencil.erase("the"), "She sells           by     seashore")
-        self.assertEqual(self.my_pencil.rewrite("crustaceans"), "She sells crustacean@y     seashore")
-        self.assertEqual(self.my_pencil.rewrite("a"), "She sells crustacean@y a   seashore")
+    def test_rewriting_where_you_can_choose_which_erased_spot_to_rewrite(self):
+        self.my_pencil.write("Charizard used blast burn. It's super effective!")
+        self.assertEqual(self.my_pencil.erase("super effective!"), "Charizard used blast burn. It's                 ")
+        self.assertEqual(self.my_pencil.erase("blast burn"), "Charizard used           . It's                 ")
+        self.assertEqual(self.my_pencil.erase("Charizard"), "          used           . It's                 ")
+        self.assertEqual(self.my_pencil.rewrite(1, "fly"), "          used fly       . It's                 ")
+        self.assertEqual(self.my_pencil.rewrite(1, "not very effective."), "          used fly       . It's not very effective.")
+        self.assertEqual(self.my_pencil.rewrite(0, "Blaziken"), "Blaziken  used fly       . It's not very effective.")
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

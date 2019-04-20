@@ -57,5 +57,10 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.write("hello world!")
         self.assertEqual(self.my_pencil.erase("world"), "hello      !")
 
+    def test_if_more_than_one_of_same_word_the_last_occurrence_of_word_is_erased(self):
+        self.my_pencil.set_durability(50)
+        self.my_pencil.write("up up down down left right left right")
+        self.assertEqual(self.my_pencil.erase("left"), "up up down down left right      right")
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

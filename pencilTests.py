@@ -83,5 +83,10 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.erase("mother")
         self.assertEqual(self.my_pencil.rewrite("mom"), "your mom    was a hamster")
 
+    def test_rewriting_a_word_that_is_too_long_overwrites_characters_with_at_symbols(self):
+        self.my_pencil.write("my name is Smith.")
+        self.my_pencil.erase("name")
+        self.assertEqual(self.my_pencil.rewrite("surname"), "my surna@@ Smith.")
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

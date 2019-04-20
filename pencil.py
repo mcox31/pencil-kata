@@ -7,7 +7,7 @@ class Pencil():
         self.tip_durability = tip_durability
         self.length = length
         self.eraser_durability = eraser_durability
-        self.erased_word_indices = []
+        self.erased_word_indices_and_lengths = []
 
     def write(self, words):
         """My pencil writes on a sheet of paper. Writing more words means more words on the page."""
@@ -66,7 +66,7 @@ class Pencil():
 
     def erase(self, words):
         index_of_word = self.sheet_of_paper.rfind(words)
-        self.erased_word_indices.append(index_of_word)
+        self.erased_word_indices_and_lengths.append((index_of_word, len(words)))
         paper_to_the_left_of_erased_word, paper_to_the_right_of_erased_word = self.split_paper(index_of_word, len(words))
         numspaces_where_word_was = ""
         for char in words:
@@ -89,10 +89,18 @@ class Pencil():
         return self.eraser_durability
 
     def rewrite(self, words):
-        index_to_insert_word = self.erased_word_indices[0]
-        paper_to_left_of_insert, paper_to_right_of_insert = self.split_paper(index_to_insert_word, len(words))
-        return paper_to_left_of_insert + words + paper_to_right_of_insert
-
+        index_to_insert_word, erased_word_length = self.erased_word_indices_and_lengths[0]
+        paper_to_left_of_insert, paper_to_right_of_insert = self.split_paper(index_to_insert_word, 0)
+        rewritten_insert = ""
+        if len(words) <= erased_word_length:
+            return paper_to_left_of_insert + words + paper_to_right_of_insert[len(words):]
+        else:
+            for x, y in zip(words, paper_to_right_of_insert):
+                if y == " ":
+                    rewritten_insert = rewritten_insert + x
+                else:
+                    rewritten_insert = rewritten_insert + "@"
+            return paper_to_left_of_insert + rewritten_insert + paper_to_right_of_insert[len(rewritten_insert):]
 
     def split_paper(self, index, length):
         paper_to_the_left_of_word = self.sheet_of_paper[0:index]

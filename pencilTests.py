@@ -73,10 +73,10 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.erase(" world")
         self.assertEqual(self.my_pencil.get_eraser_durability(), 1)
 
-    def test_if_eraser_durability_reaches_zero_then_it_stops_erasing(self):
+    def test_if_eraser_durability_reaches_zero_then_it_stops_erasing_from_the_right(self):
         self.my_pencil.write("shinedown")
         self.my_pencil.set_eraser_durability(5)
-        self.assertEqual(self.my_pencil.erase("shinedown"), "     down")
+        self.assertEqual(self.my_pencil.erase("shinedown"), "shin     ")
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -74,10 +74,10 @@ class Pencil():
             numspaces_where_word_was = numspaces_where_word_was + " "
             if char != " ":
                 self.eraser_durability -= 1
-        if numspaces_where_word_was == len(words):
+        if len(numspaces_where_word_was) == len(words):
             new_sheet_of_paper = paper_to_the_left_of_erased_word + numspaces_where_word_was + paper_to_the_right_of_erased_word
         else:
-            new_sheet_of_paper = paper_to_the_left_of_erased_word + numspaces_where_word_was + words[len(numspaces_where_word_was):] + paper_to_the_right_of_erased_word
+            new_sheet_of_paper = paper_to_the_left_of_erased_word + words[:len(numspaces_where_word_was)-1] + numspaces_where_word_was + paper_to_the_right_of_erased_word
         return new_sheet_of_paper
 
     def set_eraser_durability(self, durability):

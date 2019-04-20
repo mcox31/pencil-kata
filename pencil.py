@@ -92,15 +92,19 @@ class Pencil():
         index_to_insert_word, erased_word_length = self.erased_word_indices_and_lengths[0]
         paper_to_left_of_insert, paper_to_right_of_insert = self.split_paper(index_to_insert_word, 0)
         rewritten_insert = ""
+        new_sheet_of_paper = ""
         if len(words) <= erased_word_length:
-            return paper_to_left_of_insert + words + paper_to_right_of_insert[len(words):]
+            new_sheet_of_paper = paper_to_left_of_insert + words + paper_to_right_of_insert[len(words):]
         else:
             for x, y in zip(words, paper_to_right_of_insert):
                 if y == " ":
                     rewritten_insert = rewritten_insert + x
                 else:
                     rewritten_insert = rewritten_insert + "@"
-            return paper_to_left_of_insert + rewritten_insert + paper_to_right_of_insert[len(rewritten_insert):]
+            new_sheet_of_paper = paper_to_left_of_insert + rewritten_insert + paper_to_right_of_insert[len(rewritten_insert):]
+        self.sheet_of_paper = new_sheet_of_paper
+        self.erased_word_indices_and_lengths = self.erased_word_indices_and_lengths[1:]
+        return self.sheet_of_paper
 
     def split_paper(self, index, length):
         paper_to_the_left_of_word = self.sheet_of_paper[0:index]

@@ -5,7 +5,7 @@ class PencilTester(unittest.TestCase):
     
     def setUp(self):
         """Runs once per test to define a fresh object."""
-        self.my_pencil = Pencil(50, 5, 10)
+        self.my_pencil = Pencil(50, 5, 20)
     
     def tearDown(self):
         """Runs once per test to delete object"""
@@ -92,6 +92,13 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.write("How much wood could a woodchuck chuck if a woodchuck...")
         self.assertEqual(self.my_pencil.erase("chuck"), "How much wood could a woodchuck chuck if a wood     ...")
         self.assertEqual(self.my_pencil.erase("chuck"), "How much wood could a woodchuck       if a wood     ...")
+
+    def test_rewriting_rewrites_in_the_order_erased(self):
+        self.my_pencil.write("She sells seashells by the seashore")
+        self.assertEqual(self.my_pencil.erase("seashells"), "She sells           by the seashore")
+        self.assertEqual(self.my_pencil.erase("the"), "She sells           by     seashore")
+        self.assertEqual(self.my_pencil.rewrite("crustaceans"), "She sells crustacean@y     seashore")
+        self.assertEqual(self.my_pencil.rewrite("a"), "She sells crustacean@y a   seashore")
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

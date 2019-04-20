@@ -80,10 +80,6 @@ class Pencil():
         # find the right-most index of word that we want to erase
         index_of_word = self.sheet_of_paper.rfind(words_to_erase)
 
-        # add erased word to list for rewriting options
-        self.erased_word_indices_and_lengths.append(
-            (index_of_word, len(words_to_erase)))
-
         # splitting the paper string around the word to be erased
         paper_to_the_left_of_erased_word, paper_to_the_right_of_erased_word = self.split_paper(
             index_of_word, len(words_to_erase))
@@ -102,13 +98,20 @@ class Pencil():
         if len(numspaces_where_word_was) == len(words_to_erase):
             new_sheet_of_paper = paper_to_the_left_of_erased_word + \
                 numspaces_where_word_was + paper_to_the_right_of_erased_word
+            # add erased word to list for rewriting options
+            self.erased_word_indices_and_lengths.append(
+                (index_of_word, len(words_to_erase)))
 
         # otherwise if eraser durability is zero, replaces with word
         # erased from right to left followed by whitespaces (if any)
         else:
+            substring_that_remains_after_eraser_durability_is_zero = words_to_erase[:len(words_to_erase)-len(numspaces_where_word_was)]
             new_sheet_of_paper = paper_to_the_left_of_erased_word + \
-                words_to_erase[:len(words_to_erase)-len(numspaces_where_word_was)] + \
+                substring_that_remains_after_eraser_durability_is_zero + \
                 numspaces_where_word_was + paper_to_the_right_of_erased_word
+            # add partially erased word to list for rewriting options
+            self.erased_word_indices_and_lengths.append((index_of_word+len(substring_that_remains_after_eraser_durability_is_zero), len(numspaces_where_word_was)))    
+
         self.sheet_of_paper = new_sheet_of_paper
         return self.sheet_of_paper
 

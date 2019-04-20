@@ -116,7 +116,11 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.set_tip_durability(7)
         self.assertEqual(self.my_pencil.rewrite(0, "Michael"), "Hello world! My name is Michae . yay.")
         
-
+    def test_bug_where_when_eraser_durability_runs_out_and_the_whole_word_is_not_erased_rewriting_overwrites_the_characters_still_there(self):
+        self.my_pencil.write("hello world!")
+        self.my_pencil.set_eraser_durability(4)
+        self.assertEqual(self.my_pencil.erase("world"), "hello w    !")
+        self.assertEqual(self.my_pencil.rewrite(0, "orld"), "hello world!")
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

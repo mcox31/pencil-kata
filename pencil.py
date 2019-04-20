@@ -61,3 +61,13 @@ class Pencil():
 
     def get_length(self):
         return self.length
+
+    def erase(self, words):
+        index_of_word_to_be_erased = self.sheet_of_paper.rfind(words)
+        paper_to_the_left_of_erased_word = self.sheet_of_paper[0:index_of_word_to_be_erased]
+        paper_to_the_right_of_erased_word = self.sheet_of_paper[index_of_word_to_be_erased+len(words):]
+        numspaces_where_word_was = ""
+        for char in words:
+            numspaces_where_word_was = numspaces_where_word_was + " "
+        new_sheet_of_paper = paper_to_the_left_of_erased_word + numspaces_where_word_was + paper_to_the_right_of_erased_word
+        return new_sheet_of_paper

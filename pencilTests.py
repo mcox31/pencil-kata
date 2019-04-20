@@ -53,5 +53,9 @@ class PencilTester(unittest.TestCase):
         self.assertEqual(self.my_pencil.sharpen(), False)
         self.assertEqual(self.my_pencil.get_durability(), 0)
 
+    def test_if_word_is_erased_its_replaced_with_spaces(self):
+        self.my_pencil.write("hello world!")
+        self.assertEqual(self.my_pencil.erase("world"), "hello      !")
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

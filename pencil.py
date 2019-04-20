@@ -1,10 +1,11 @@
 class Pencil():
 
-    def __init__(self, durability):
+    def __init__(self, durability, length):
         """Initializer. Now sets durability on object creation."""
         self.sheet_of_paper = ""
         self.initial_durability = durability
         self.durability = durability
+        self.length = length
 
     def write(self, words):
         """My pencil writes on a sheet of paper. Writing more words means more words on the page."""
@@ -16,13 +17,13 @@ class Pencil():
         self.initial_durability = durability
         self.durability = durability
 
-    def check_durability(self):
+    def get_durability(self):
         """Explicit call to check durability of pencil tip."""
         return self.durability
 
     def calculate_durability(self, words):
         """Calculates durability from written words, ignoring spaces. If durability is greater, returns durability after words. Otherwise returns zero durability"""
-        if self.check_durability() > len(words.replace(" ", "")):
+        if self.get_durability() > len(words.replace(" ", "")):
             return (self.durability - len(words.replace(" ", "")))
         else:
             return 0
@@ -50,3 +51,10 @@ class Pencil():
         
     def sharpen(self):
         self.set_durability(self.initial_durability)
+        self.length -= 1
+
+    def set_length(self, length):
+        self.length = length
+
+    def get_length(self):
+        return self.length

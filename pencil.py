@@ -3,6 +3,7 @@ class Pencil():
     def __init__(self, durability):
         """Initializer. Now sets durability on object creation."""
         self.sheet_of_paper = ""
+        self.initial_durability = durability
         self.durability = durability
 
     def write(self, words):
@@ -11,7 +12,8 @@ class Pencil():
         return self.sheet_of_paper
 
     def set_durability(self, durability):
-        """Change durability of pencil tip."""
+        """Change durability of pencil tip. This affects the number reset after sharpening."""
+        self.initial_durability = durability
         self.durability = durability
 
     def check_durability(self):
@@ -29,7 +31,7 @@ class Pencil():
         """Returns regular string or stripped string. Also re-calculates durability."""
         # return full string if durability is fine.
         if self.calculate_durability(words) > 0:
-            self.set_durability(self.calculate_durability(words))
+            self.durability = self.calculate_durability(words)
             return words
         
         # return stripped string if pencil will run out of durability, ignoring spaces
@@ -46,3 +48,5 @@ class Pencil():
                         self.durability -= 1
         return new_words
         
+    def sharpen(self):
+        self.set_durability(self.initial_durability)

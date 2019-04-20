@@ -35,5 +35,12 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.set_durability(4)
         self.assertEqual(self.my_pencil.write("Hello"), "Hel")
 
+    def test_if_pencil_is_sharpened_its_durability_is_reset(self):
+        self.my_pencil.set_durability(4)
+        self.my_pencil.write("Hello")
+        self.assertEqual(self.my_pencil.check_durability(), 0)
+        self.my_pencil.sharpen()
+        self.assertEqual(self.my_pencil.check_durability(), 4)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

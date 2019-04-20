@@ -1,30 +1,31 @@
 class Pencil():
 
-    def __init__(self, durability, length):
+    def __init__(self, tip_durability, length, eraser_durability):
         """Initializer. Now sets durability on object creation."""
         self.sheet_of_paper = ""
-        self.initial_durability = durability
-        self.durability = durability
+        self.initial_tip_durability = tip_durability
+        self.tip_durability = tip_durability
         self.length = length
+        self.eraser_durability = eraser_durability
 
     def write(self, words):
         """My pencil writes on a sheet of paper. Writing more words means more words on the page."""
         self.sheet_of_paper = self.sheet_of_paper + self.calculate_words_that_pencil_writes_before_going_dull(words)
         return self.sheet_of_paper
 
-    def set_durability(self, durability):
+    def set_tip_durability(self, durability):
         """Change durability of pencil tip. This affects the number reset after sharpening."""
-        self.initial_durability = durability
-        self.durability = durability
+        self.initial_tip_durability = durability
+        self.tip_durability = durability
 
-    def get_durability(self):
+    def get_tip_durability(self):
         """Explicit call to check durability of pencil tip."""
-        return self.durability
+        return self.tip_durability
 
     def calculate_durability(self, words):
         """Calculates durability from written words, ignoring spaces. If durability is greater, returns durability after words. Otherwise returns zero durability"""
-        if self.get_durability() > len(words.replace(" ", "")):
-            return (self.durability - len(words.replace(" ", "")))
+        if self.get_tip_durability() > len(words.replace(" ", "")):
+            return (self.tip_durability - len(words.replace(" ", "")))
         else:
             return 0
 
@@ -32,26 +33,26 @@ class Pencil():
         """Returns regular string or stripped string. Also re-calculates durability."""
         # return full string if durability is fine.
         if self.calculate_durability(words) > 0:
-            self.durability = self.calculate_durability(words)
+            self.tip_durability = self.calculate_durability(words)
             return words
         
         # return stripped string if pencil will run out of durability, ignoring spaces
         new_words = ""
         for char in words:
-            if self.durability == 0:
+            if self.tip_durability == 0:
                 break
             else:
                 new_words = new_words + char
                 if char != " ":
                     if char.isupper():
-                        self.durability -= 2
+                        self.tip_durability -= 2
                     else:
-                        self.durability -= 1
+                        self.tip_durability -= 1
         return new_words
         
     def sharpen(self):
         if self.get_length() > 0:
-            self.set_durability(self.initial_durability)
+            self.set_tip_durability(self.initial_tip_durability)
             self.length -= 1
         else:
             return False
@@ -68,6 +69,15 @@ class Pencil():
         paper_to_the_right_of_erased_word = self.sheet_of_paper[index_of_word_to_be_erased+len(words):]
         numspaces_where_word_was = ""
         for char in words:
+            if self.eraser_durability == 0:
+                break
             numspaces_where_word_was = numspaces_where_word_was + " "
+            self.eraser_durability -= 1
         new_sheet_of_paper = paper_to_the_left_of_erased_word + numspaces_where_word_was + paper_to_the_right_of_erased_word
         return new_sheet_of_paper
+
+    def set_eraser_durability(self, durability):
+        self.eraser_durability = durability
+    
+    def get_eraser_durability(self):
+        return self.eraser_durability

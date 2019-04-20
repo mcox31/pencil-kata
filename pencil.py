@@ -50,8 +50,11 @@ class Pencil():
         return new_words
         
     def sharpen(self):
-        self.set_durability(self.initial_durability)
-        self.length -= 1
+        if self.get_length() > 0:
+            self.set_durability(self.initial_durability)
+            self.length -= 1
+        else:
+            return False
 
     def set_length(self, length):
         self.length = length

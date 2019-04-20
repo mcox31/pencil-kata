@@ -47,5 +47,11 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.sharpen()
         self.assertEqual(self.my_pencil.get_length(), 1)
 
+    def test_if_pencil_length_is_zero_it_cannot_be_sharpened_anymore(self):
+        self.my_pencil.set_length(0)
+        self.my_pencil.set_durability(0)
+        self.assertEqual(self.my_pencil.sharpen(), False)
+        self.assertEqual(self.my_pencil.get_durability(), 0)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

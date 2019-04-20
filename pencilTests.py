@@ -88,5 +88,10 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.erase("name")
         self.assertEqual(self.my_pencil.rewrite("surname"), "my surna@@ Smith.")
 
+    def test_erasing_multiple_word_multiples(self):
+        self.my_pencil.write("How much wood could a woodchuck chuck if a woodchuck...")
+        self.assertEqual(self.my_pencil.erase("chuck"), "How much wood could a woodchuck chuck if a wood     ...")
+        self.assertEqual(self.my_pencil.erase("chuck"), "How much wood could a woodchuck       if a wood     ...")
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

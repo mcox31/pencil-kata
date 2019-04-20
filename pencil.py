@@ -88,8 +88,6 @@ class Pencil():
         paper_to_the_left_of_erased_word, paper_to_the_right_of_erased_word = self.split_paper(
             index_of_word, len(words_to_erase))
 
-        print(f"left side: {paper_to_the_left_of_erased_word}, right side: {paper_to_the_right_of_erased_word}")
-
         # populate a list of blank spaces to insert into erased spot
         # calculates eraser durability, skipping spaces.
         numspaces_where_word_was = ""
@@ -111,7 +109,6 @@ class Pencil():
             new_sheet_of_paper = paper_to_the_left_of_erased_word + \
                 words_to_erase[:len(words_to_erase)-len(numspaces_where_word_was)] + \
                 numspaces_where_word_was + paper_to_the_right_of_erased_word
-            print(f"substring to be inserted: {words_to_erase[:len(words_to_erase)-len(numspaces_where_word_was)]}")
         self.sheet_of_paper = new_sheet_of_paper
         return self.sheet_of_paper
 
@@ -125,6 +122,9 @@ class Pencil():
 
     def rewrite(self, index, words):
         """Takes the index of an erased word and replaces the text. Once rewritten the index is deleted (no longer erased)"""
+        #durability calculation
+        words_to_be_inserted = self.calculate_words_that_pencil_writes_before_going_dull(words)
+
         # get indices and lengths of erased words, sorted by indicies
         self.erased_word_indices_and_lengths_sorted = sorted(
             self.erased_word_indices_and_lengths)
@@ -138,20 +138,20 @@ class Pencil():
         new_sheet_of_paper = ""
 
         # case if no overwriting needed
-        if len(words) <= erased_word_length:
+        if len(words_to_be_inserted) <= erased_word_length:
             new_sheet_of_paper = paper_to_left_of_insert + \
-                words + paper_to_right_of_insert[len(words):]
+                words_to_be_inserted + paper_to_right_of_insert[len(words_to_be_inserted):]
 
         else:
             # checks if end needs to be padded because replacement is longer than previous word and extends past the old string length.
-            if len(words) > len(paper_to_right_of_insert):
+            if len(words_to_be_inserted) > len(paper_to_right_of_insert):
                 num_of_spaces_to_pad = len(
-                    words) - len(paper_to_right_of_insert)
+                    words_to_be_inserted) - len(paper_to_right_of_insert)
                 for x in range(num_of_spaces_to_pad):
                     paper_to_right_of_insert = paper_to_right_of_insert + " "
 
             # populate string to insert into the new paper string. Add @ if there's a character already.
-            for x, y in zip(words, paper_to_right_of_insert):
+            for x, y in zip(words_to_be_inserted, paper_to_right_of_insert):
                 if y == " " or "":
                     rewritten_insert = rewritten_insert + x
                 else:
@@ -172,7 +172,7 @@ class Pencil():
         return (paper_to_the_left_of_word, paper_to_the_right_of_word)
 
     def print_pencil_stats(self):
-        print(f"Tip durability: {self.tip_durability}, length: {self.length}, eraser_durability: {self.eraser_durability}")
+        print(f"Pencil Stats:\nTip durability: {self.tip_durability}, Length: {self.length}, Eraser durability: {self.eraser_durability}")
 
     def print_sheet_of_paper(self):
         print("Your page looks like: ")

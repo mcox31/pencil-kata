@@ -9,9 +9,9 @@ def get_selection(message):
     return selection
 
 def create_new_pencil():
-    tip_durability = int(input("Enter tip durability: "))
-    length = int(input("Enter pencil length: "))
-    eraser_durability = int(input("Enter eraser durability: "))
+    tip_durability = get_selection("Enter tip durability: ")
+    length = get_selection("Enter pencil length: ")
+    eraser_durability = get_selection("Enter eraser durability: ")
     my_pencil.set_tip_durability(tip_durability)
     my_pencil.set_length(length)
     my_pencil.set_eraser_durability(eraser_durability)
@@ -41,7 +41,6 @@ def edit_pencil():
 def view_pencil_stats_and_paper():
     print_divider()
     print_stats_and_paper()
-    print_divider()
 
 def write_with_pencil():
     print_divider()

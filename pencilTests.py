@@ -7,7 +7,7 @@ class PencilTester(unittest.TestCase):
     
     def setUp(self):
         """Runs once per test to define a fresh object."""
-        self.my_pencil = Pencil(50, 5, 50)
+        self.my_pencil = Pencil(100, 5, 50)
     
     def tearDown(self):
         """Runs once per test to delete object"""
@@ -109,6 +109,14 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.write("hello world! my name is Michael.")
         self.assertEqual(self.my_pencil.erase("world"), "hello      ! my name is Michael.")
         self.assertEqual(self.my_pencil.erase("Michael"), "hello      ! my name is M      .")
+
+    def test_if_rewriting_affects_pencil_durability_because_I_did_not_think_of_it_earlier(self):
+        self.my_pencil.write("Hello world! My name is Michael. yay.")
+        self.my_pencil.erase("Michael")
+        self.my_pencil.set_tip_durability(7)
+        self.assertEqual(self.my_pencil.rewrite(0, "Michael"), "Hello world! My name is Michae . yay.")
+        
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

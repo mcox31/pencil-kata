@@ -17,7 +17,7 @@ while True:
     print("4. Write with your pencil.")
     print("5. Sharpen your pencil.")
     print("6. Erase Words.")
-    print("7. Rewrite erased words.")
+    print("7. Write over erased words.")
     print("8. Run unit tests. (Quits program)")
     print("9. Quit driver program")
 

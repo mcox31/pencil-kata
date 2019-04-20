@@ -7,11 +7,7 @@ class Pencil():
 
     def write(self, words):
         """My pencil writes on a sheet of paper. Writing more words means more words on the page."""
-        if self.calculate_durability(words) > 0:
-            self.sheet_of_paper = self.sheet_of_paper + words
-        else:
-            self.sheet_of_paper = self.sheet_of_paper + self.calculate_words_that_pencil_writes_before_going_dull(words)
-        self.set_durability(self.calculate_durability(words))
+        self.sheet_of_paper = self.sheet_of_paper + self.calculate_words_that_pencil_writes_before_going_dull(words)
         return self.sheet_of_paper
 
     def set_durability(self, durability):
@@ -30,6 +26,13 @@ class Pencil():
             return 0
 
     def calculate_words_that_pencil_writes_before_going_dull(self, words):
+        
+        # return full string if durability is fine.
+        if self.calculate_durability(words) > 0:
+            self.set_durability(self.calculate_durability(words))
+            return words
+        
+        # return stripped string if pencil will run out of durability
         new_words = ""
         for char in words:
             if self.durability == 0:

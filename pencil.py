@@ -72,7 +72,8 @@ class Pencil():
             if self.eraser_durability == 0:
                 break
             numspaces_where_word_was = numspaces_where_word_was + " "
-            self.eraser_durability -= 1
+            if char != " ":
+                self.eraser_durability -= 1
         new_sheet_of_paper = paper_to_the_left_of_erased_word + numspaces_where_word_was + paper_to_the_right_of_erased_word
         return new_sheet_of_paper
 

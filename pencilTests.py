@@ -67,5 +67,11 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.erase("world")
         self.assertEqual(self.my_pencil.get_eraser_durability(), 0)
 
+    def test_that_whitespace_does_not_degrade_eraser(self):
+        self.my_pencil.write("hello world!")
+        self.my_pencil.set_eraser_durability(6)
+        self.my_pencil.erase(" world")
+        self.assertEqual(self.my_pencil.get_eraser_durability(), 1)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

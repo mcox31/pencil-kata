@@ -104,5 +104,14 @@ class PencilTester(unittest.TestCase):
         self.assertEqual(self.my_pencil.rewrite(1, "not very effective."), "          used fly       . It's not very effective.")
         self.assertEqual(self.my_pencil.rewrite(0, "Blaziken"), "Blaziken  used fly       . It's not very effective.")
 
+    def test_bug_where_eraser_does_not_always_work_properly_when_its_durability_runs_out(self):
+        self.my_pencil.set_eraser_durability(11)
+        self.my_pencil.write("hello world! my name is Michael.")
+        self.assertEqual(self.my_pencil.erase("world"), "hello      ! my name is Michael.")
+        self.assertEqual(self.my_pencil.erase("Michael"), "hello      ! my name is M      .")
+
 if __name__ == "__main__":
+    unittest.main(verbosity=2)
+
+def run_unit_tests():
     unittest.main(verbosity=2)

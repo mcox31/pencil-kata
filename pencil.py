@@ -60,9 +60,11 @@ class Pencil():
         if self.get_length() > 0:
             self.set_tip_durability(self.initial_tip_durability)
             self.length -= 1
+            print("Pencil sharpened.")
 
         # Returns False to show length = 0, so can't sharpen.
         else:
+            print("Cannot sharpen! Length = 0!")
             return False
 
     def set_length(self, length):
@@ -86,6 +88,8 @@ class Pencil():
         paper_to_the_left_of_erased_word, paper_to_the_right_of_erased_word = self.split_paper(
             index_of_word, len(words_to_erase))
 
+        print(f"left side: {paper_to_the_left_of_erased_word}, right side: {paper_to_the_right_of_erased_word}")
+
         # populate a list of blank spaces to insert into erased spot
         # calculates eraser durability, skipping spaces.
         numspaces_where_word_was = ""
@@ -105,8 +109,9 @@ class Pencil():
         # erased from right to left followed by whitespaces (if any)
         else:
             new_sheet_of_paper = paper_to_the_left_of_erased_word + \
-                words_to_erase[:len(numspaces_where_word_was)-1] + \
+                words_to_erase[:len(words_to_erase)-len(numspaces_where_word_was)] + \
                 numspaces_where_word_was + paper_to_the_right_of_erased_word
+            print(f"substring to be inserted: {words_to_erase[:len(words_to_erase)-len(numspaces_where_word_was)]}")
         self.sheet_of_paper = new_sheet_of_paper
         return self.sheet_of_paper
 
@@ -166,8 +171,9 @@ class Pencil():
         paper_to_the_right_of_word = self.sheet_of_paper[index+length:]
         return (paper_to_the_left_of_word, paper_to_the_right_of_word)
 
-    # Added in last commit. Will be removing in next commit.
-    # Outdated function, no longer needed.
-    # def rewrite_index(self, index, words):
-    #    self.erased_word_indices_and_lengths_sorted = sorted(
-    #        self.erased_word_indices_and_lengths)
+    def print_pencil_stats(self):
+        print(f"Tip durability: {self.tip_durability}, length: {self.length}, eraser_durability: {self.eraser_durability}")
+
+    def print_sheet_of_paper(self):
+        print("Your page looks like: ")
+        print(self.sheet_of_paper)

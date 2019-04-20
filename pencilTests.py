@@ -24,5 +24,9 @@ class PencilTester(unittest.TestCase):
         self.my_pencil.write("hello")
         self.assertEqual(self.my_pencil.check_durability(), 0)
 
+    def test_if_pencil_durability_is_zero_it_no_longer_writes_characters(self):
+        self.my_pencil.set_durability(4)
+        self.assertEqual(self.my_pencil.write("hello"), "hell")
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

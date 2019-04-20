@@ -1,6 +1,8 @@
 import unittest
 from pencil import Pencil
 
+#Line length purposefully left longer than PEP8 standards for readability.
+
 class PencilTester(unittest.TestCase):
     
     def setUp(self):
